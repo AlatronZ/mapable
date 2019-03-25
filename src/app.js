@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import L from 'leaflet-draw';
+// import L from 'leaflet-draw';
 
 //const leafletDraw = require('leaflet-draw');
 
