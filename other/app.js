@@ -10,9 +10,9 @@ import L from 'leaflet';
 const Mapable = () => {
     return (
         <div>
-        <h1>Welcome to Mapable!</h1>
+            <h1>Welcome to Mapable!</h1>
             <p>Look at this map, isn't it neat <br />
-            Unfortunately this code is incomplete</p>
+                Unfortunately this code is incomplete</p>
             <div
                 id="mapid"
                 style={{ height: "480px", width: "480px" }}>
@@ -49,13 +49,15 @@ Could then add conditions of max/min zoom
 // */
 // L.tileLayer('/images/MapImage.png').addTo(myMap);
 
-const polygon = L.polygon([
+const polygon1 = L.polygon([
     [-41.3, 174.8],
     [-41.32, 174.75],
     [-41.28, 174.8]
 ], {
-    color: 'red'
-}).addTo(myMap);
+        color: 'red'
+    }).addTo(myMap);
+
+let clickList = [];
 
 //potential future use
 const marker = L.marker([-41.294018, 174.777596]);
@@ -66,6 +68,14 @@ var popup = L.popup().setLatLng([-41.3, 174.8]).setContent("Coordinate").openOn(
 
 //Click event handler
 const onMapClick = (e) => {
-    console.log(e);
+    //need a toolbar or set point limit
+    console.log(`Point ${clickList.length}: ${e.latlng}`);
+    clickList = [...clickList, [e.latlng.lat, e.latlng.lng]];
+    //implemented with point limit of 3
+    if (clickList.length >= 3) {
+        console.log('Polygon complete');
+        const polygon2 = L.polygon(clickList, { color: 'purple' }).addTo(myMap);
+        clickList = [];
+    }
 }
 myMap.on('click', onMapClick);
