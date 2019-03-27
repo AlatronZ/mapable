@@ -12,17 +12,18 @@ import '../src/styles/styles.scss';
 
 //Contains style overrides to view map window
 const Mapable = () => {
-    return (<div>
-        <h1 > Welcome to Mapable! </h1>
-        <p> Look at this map, isn 't it neat <br />
-            Unfortunately this code is incomplete </p>
-        <div id="myMap" >
+    return (
+        <div>
+            <h1>Welcome to Mapable!</h1>
+            <p>Look at this map, isn 't it neat <br />
+                Unfortunately this code is incomplete</p>
+            <div id="myMap" >
+            </div>
         </div>
-    </div>
     )
 }
 
-ReactDOM.render(< Mapable />, document.getElementById('app'));
+ReactDOM.render(<Mapable />, document.getElementById('app'));
 
 const latLanHome = [-41.294018, 174.777596];
 //Map can only be created after the connected map object
@@ -56,7 +57,6 @@ var drawControl = new L.Control.Draw({
                 color: 'green'
             }
         },
-
         //disable
         circle: false,
         circlemarker: false,
@@ -65,29 +65,20 @@ var drawControl = new L.Control.Draw({
     },
     edit: {
         featureGroup: drawnItems,
-        remove: false
+        remove: true
     }
 });
 myMap.addControl(drawControl);
 
-let editableCanvas = new L.FeatureGroup();
-myMap.addLayer(editableCanvas);
-
 const marker = L.marker([-41.294018, 174.777596]);
-marker.addTo(editableCanvas);
+marker.addTo(drawnItems);
 marker.bindPopup("Abletech");
 
 myMap.on('draw:created', (e) => {
-    if(e.layerType==='polygon'){
-        e.layer.addTo(editableCanvas);
-    } else if(e.layerType==='marker'){
-        e.layer.addTo(editableCanvas);
+    if (e.layerType === 'polygon') {
+        e.layer.addTo(drawnItems);
+    } else if (e.layerType === 'marker') {
+        e.layer.addTo(drawnItems);
     }
-})
 
-//Click event handler
-const onMapClick = (e) => {
-    //need a toolbar or set point limit
-    //drawPolygon(e)
-}
-myMap.on('click', onMapClick);
+})

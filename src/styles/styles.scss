@@ -1,8 +1,1 @@
-//@import '../../node_modules/leaflet-draw/dist/leaflet.draw-src.css';
-.leaflet-container {
-    background-color: #2A77EB; //will show when map window doesn't show
-    height: 480px;
-    margin-left: 20px;
-    padding: 10px;
-    width: 480px;
-}
+@import './leaflet-draw.scss';
