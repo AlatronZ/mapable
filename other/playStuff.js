@@ -23,10 +23,3 @@
 //         clickList = [];
 //     }
 // }
-
-//----------Tile Layer Image Test----------
-/* Using an image test
-* It works but needs a large enough image or it literally tile layers
-Could then add conditions of max/min zoom
-// */
-// L.tileLayer('/images/MapImage.png').addTo(myMap);
