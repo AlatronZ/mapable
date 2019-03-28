@@ -1,12 +1,7 @@
-// .leaflet-container {
-//     background-color: #2A77EB; //will show when map window doesn't show
-//     height: 480px;
-//     margin-left: 20px;
-//     padding: 10px;
-//     width: 480px;
-// }
+/* CSS sourced from Leaflet project
+ * Toolbar is iconless as images need to be correctly added
+ */
 
-//CSS sourced from Leaflet project
 
 .leaflet-draw-section {
     position: relative
@@ -29,8 +24,8 @@
 }
 
 .leaflet-draw-toolbar a {
-    //background-image: url('images/spritesheet.png');
-    //background-image: linear-gradient(transparent, transparent), url('images/spritesheet.svg');
+    // background-image: url('images/spritesheet.png');
+    // background-image: linear-gradient(transparent, transparent), url('images/spritesheet.svg');
     background-repeat: no-repeat;
     background-size: 300px 30px;
     background-clip: padding-box

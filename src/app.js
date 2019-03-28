@@ -33,15 +33,26 @@ const minZoom = 5; //All of NZ in 480*480 window
  * While using any part of OSM it must be an attribution/reference per copyright
  */
 const osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+    errorTileUrl: 'OpenStreetMaps unavailable'
 });
-const imageTile = L.tileLayer('/images/MapImage.png');
+const image = L.imageOverlay(
+    '/images/colouredCheck.jpg',
+    [[-43, 174], [-41, 176]],
+    { attribution: 'Fixed Image' }
+);
+const imageTile = L.tileLayer('/images/floof.jpg', {
+    attribution: 'Tiled Image',
+    errorTileUrl: 'Image unavailable'
+});
+
 var drawnMarker = new L.layerGroup();
 var drawnItems = new L.FeatureGroup(); //layer to be drawn on
 
 var baseLayers = {
     "Open Street Map": osm,
-    "Image": imageTile
+    "Image": image,
+    "Image2": imageTile
 };
 var overlayLayers = {
     "Home": drawnMarker,
@@ -56,7 +67,7 @@ const myMap = L.map('myMap',
     {
         center: latLanHome,
         keyboardPanDelta: 50,
-        layers: [osm, imageTile, drawnMarker, drawnItems],
+        layers: [osm, drawnMarker, drawnItems], //default state
         maxZoom,
         minZoom,
         zoom: zoomDefault
