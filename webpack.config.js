@@ -2,7 +2,7 @@
 const path = require('path');
 
 module.exports = {
-    entry: './src/app.js',
+    entry: './other/react-app.js',
     output: {
         path: path.join(__dirname, 'public'),
         filename: 'bundle.js'
@@ -14,7 +14,7 @@ module.exports = {
             exclude: /node_modules/
         },
         {
-            test: /\.s?css/, //makes s optional
+            test: /\.s?css/,
             use: [
                 'style-loader',
                 'css-loader',

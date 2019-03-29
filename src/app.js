@@ -13,7 +13,7 @@ const Mapable = () => {
     return (
         <div>
             <h1>Welcome to Mapable!</h1>
-            <p>Look at this map, isn 't it neat <br />
+            <p>Look at this map, isn't it neat<br />
                 Unfortunately this code is incomplete</p>
             <div id="myMap" >
             </div>
@@ -36,6 +36,7 @@ const osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
     errorTileUrl: 'OpenStreetMaps unavailable'
 });
+const google = L.tileLayer('http://{s}mt1.google.com/mapstt?zoom={z}&x{x}&y{y}&client=google')
 const image = L.imageOverlay(
     '/images/colouredCheck.jpg',
     [[-43, 174], [-41, 176]],

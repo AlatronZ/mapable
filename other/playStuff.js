@@ -12,6 +12,10 @@
 //     }).addTo(myMap);
 //var popup = L.popup().setLatLng([-41.3, 174.8]).setContent("Coordinate").openOn(myMap);
 
+// const polyLine1 = [[-41.3, 174.8], [-41.32, 174.75], [-41.28, 174.8], [-41.3, 174.8]];
+// const polyLine2 = [[-41.27, 174.8], [-41.26, 174.7], [-41.26, 174.6]]
+// const multiPoly = [polyLine1, polyLine2];
+
 // let clickList = [];
 // const drawPolygon = (e) => {
 //     console.log(`Point ${clickList.length}: ${e.latlng}`);
