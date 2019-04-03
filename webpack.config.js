@@ -2,9 +2,9 @@
 const path = require('path');
 
 module.exports = {
-    entry: './other/react-app.js',
+    entry: './src/react-app.js',
     output: {
-        path: path.join(__dirname, 'public'),
+        path: path.join(__dirname, 'public', 'dist'),
         filename: 'bundle.js'
     },
     module: {
@@ -20,7 +20,18 @@ module.exports = {
                 'css-loader',
                 'sass-loader'
             ]
-        }]
+        },
+        {
+            test: /\.(png|jpe?g|svg)$/i,
+            use: [
+                {
+                    loader: 'file-loader',
+                    options: {
+                        name: 'dirname/[hash].[ext]'
+                    }
+                }]
+        }
+        ]
     },
     devtool: 'cheap-module-eval-source-map',
     devServer: {
