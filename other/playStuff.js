@@ -27,3 +27,12 @@
 //         clickList = [];
 //     }
 // }
+
+//----------Pulled from React App, Home Layer---------
+// <LayersControl.Overlay name="Home" checked={true}>
+//     <LayerGroup>
+//         <Marker position={latLanHome}>
+//             <Popup><span>Abletech<br />A fixed marker</span></Popup>
+//         </Marker>
+//     </LayerGroup>
+// </LayersControl.Overlay>

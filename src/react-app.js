@@ -1,16 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { LayersControl, FeatureGroup, Map, TileLayer } from 'react-leaflet';
-import { EditControl } from 'react-leaflet-draw';
 
+import Header from './components/Header';
+import SearchForm from './components/SearchForm';
+import MapComponent from './components/MapComponent';
 //import AddressFinder from './AddressFinder-React';
 
-import 'normalize.css/normalize.css';
-import '../src/styles/styles.scss';
-
-
+//Leaflet node modules css
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-draw/dist/leaflet.draw.css'
+
+// import 'normalize.css/normalize.css';
+import '../src/styles/styles.scss';
 
 /*
 * This version implements react-leaflet instead of leaflet
@@ -22,98 +23,30 @@ const latLanHome = [-41.294018, 174.777596];
 const zoomDefault = 12;
 
 class Mapable extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            address: '',
-            viewport: {
-                center: latLanHome,
-                zoom: zoomDefault
-            }
+    state = {
+        address: '',
+        viewport: {
+            center: latLanHome,
+            zoom: zoomDefault
         }
     }
 
     onChangeAddress = (e) => {
-        e.persist();
-        this.setState(()=>{
-            address:e.target.value
-        })
-    }
+            e.persist();
+            this.setState(() => {
+                address: e.target.value
+            })
+        }
 
     render() {
-        return (
-            <div>
-                <h1>Welcome to React Mapable!</h1>
-                <p>Look at this map, isn't it neat <br />
-                    Unfortunately this code is incomplete</p>
-
-                <form>
-                    <legend>Put Address Finder here</legend>
-                    <input
-                        autoFocus
-                        type="text"
-                        name="address"
-                        onChange={this.onChangeAddress}
-                        placeholder="Enter an address"
-                    />
-                    <button>Submit</button>
-                </form>
-
-                <Map
-                    className="myMap"
-                    viewport={this.state.viewport}
-                >
-                    <LayersControl position="topright">
-                        <LayersControl.BaseLayer name="OpenStreetMap" checked={true}>
-                            <TileLayer
-                                url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
-                                attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-                                style={{ height: "480px", width: "480px" }}
-                            />
-                        </LayersControl.BaseLayer>
-                        <LayersControl.BaseLayer name="Theraputic">
-                            <TileLayer
-                                url="../images/floof.jpg"
-                                attribution="Tiled Image"
-
-                            />
-                        </LayersControl.BaseLayer>
-                        <LayersControl.Overlay name="Draw Canvas" checked={true}>
-                            <FeatureGroup color="green">
-                                <EditControl
-                                    position='topleft'
-                                    draw={{
-                                        polygon: {
-                                            allowIntersection: false,
-                                            title: 'doodleDo',
-                                            drawError: {
-                                                color: 'red',
-                                                message: 'Don\'t cross the streams!',
-                                                timeout: 1500
-                                            },
-                                            shapeOptions: {
-                                                color: 'green'
-                                            }
-                                        },
-                                        
-                                        //disabled tools
-                                        circle: false,
-                                        circlemarker: false,
-                                        marker: false,
-                                        polyline: false,
-                                        rectangle: false
-                                    }}
-                                // edit={{
-                                //     remove: true
-                                // }}
-                                />
-                            </FeatureGroup>
-                        </LayersControl.Overlay>
-                    </LayersControl>
-                </Map>
-            </div>
-        )
+            return (
+                <div>
+                    <Header />
+                    <SearchForm onChangeAddress={this.onChangeAddress} />
+                    <MapComponent viewport={this.state.viewport} />
+                </div>
+            )
+        }
     }
-}
 
-ReactDOM.render(<Mapable />, document.getElementById('app'));
+    ReactDOM.render(<Mapable />, document.getElementById('app'));
