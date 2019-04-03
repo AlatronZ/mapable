@@ -15,12 +15,12 @@ import '../src/styles/styles.scss';
 
 /*
 * This version implements react-leaflet instead of leaflet
-* {s} subdomain, {z} zoom, {x}{y} coordinates, {r}(optional) load retina tiles
-* While using any part of OSM it must be an attribution/reference per copyright
+* Likewise react-leaflet-draw to leaflet-draw
+* Non react leaflets are used for their stylesheets, react versions look to be independent of react modules
 */
 
 const latLanHome = [-41.294018, 174.777596];
-const zoomDefault = 12;
+const zoomDefault = 18;
 
 class Mapable extends React.Component {
     state = {

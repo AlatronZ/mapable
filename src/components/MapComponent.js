@@ -2,6 +2,10 @@ import React from 'react';
 import { LayersControl, FeatureGroup, Map, TileLayer } from 'react-leaflet';
 import { EditControl } from 'react-leaflet-draw';
 
+/*
+* {s} subdomain, {z} zoom, {x}{y} coordinates, {r}(optional) load retina tiles
+* While using the base layers they must be correctly attributed per use
+*/
 const MapComponent = (props) => (
     <Map
         className="myMap"
@@ -12,10 +16,16 @@ const MapComponent = (props) => (
                 <TileLayer
                     url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
                     attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
-                    style={{ height: "480px", width: "480px" }}
                 />
-                
             </LayersControl.BaseLayer>
+
+            <LayersControl.BaseLayer name="LINZ" checked={false}>
+                <TileLayer
+                    url="http://tiles-{s}.data-cdn.linz.govt.nz/services;key=2661fdc42a6941e7aba3f8d9cb81eed1/tiles/v4/set=4702/EPSG:3857/{z}/{x}/{y}.png"
+                    attribution="<a href=“http://data.linz.govt.nz”>Sourced from LINZ. CC BY 4.0</a>"
+                />
+            </LayersControl.BaseLayer>
+
             <LayersControl.BaseLayer name="Theraputic">
                 <TileLayer
                     url="../images/floof.jpg"
