@@ -1,12 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { LayerGroup, LayersControl, FeatureGroup, Map, Marker, Polygon, Popup, TileLayer } from 'react-leaflet';
+import { LayersControl, FeatureGroup, Map, TileLayer } from 'react-leaflet';
 import { EditControl } from 'react-leaflet-draw';
 
 //import AddressFinder from './AddressFinder-React';
 
 import 'normalize.css/normalize.css';
 import '../src/styles/styles.scss';
+
+
+import 'leaflet/dist/leaflet.css'
+import 'leaflet-draw/dist/leaflet.draw.css'
 
 /*
 * This version implements react-leaflet instead of leaflet
@@ -74,13 +78,6 @@ class Mapable extends React.Component {
 
                             />
                         </LayersControl.BaseLayer>
-                        <LayersControl.Overlay name="Home" checked={true}>
-                            <LayerGroup>
-                                <Marker position={latLanHome}>
-                                    <Popup><span>Abletech<br />A fixed marker</span></Popup>
-                                </Marker>
-                            </LayerGroup>
-                        </LayersControl.Overlay>
                         <LayersControl.Overlay name="Draw Canvas" checked={true}>
                             <FeatureGroup color="green">
                                 <EditControl
@@ -98,11 +95,11 @@ class Mapable extends React.Component {
                                                 color: 'green'
                                             }
                                         },
-                                        marker: true,
-
-                                        //disabled
+                                        
+                                        //disabled tools
                                         circle: false,
                                         circlemarker: false,
+                                        marker: false,
                                         polyline: false,
                                         rectangle: false
                                     }}
