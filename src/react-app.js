@@ -31,22 +31,20 @@ class Mapable extends React.Component {
         }
     }
 
-    onChangeAddress = (e) => {
-            e.persist();
-            this.setState(() => {
-                address: e.target.value
-            })
-        }
-
-    render() {
-            return (
-                <div>
-                    <Header />
-                    <SearchForm onChangeAddress={this.onChangeAddress} />
-                    <MapComponent viewport={this.state.viewport} />
-                </div>
-            )
-        }
+    searchAddress = (address) => {
+        if(!address){ return 'Address was undefined' }
+        this.setState(() => ({ address }))
     }
 
-    ReactDOM.render(<Mapable />, document.getElementById('app'));
+    render() {
+        return (
+            <div>
+                <Header />
+                <SearchForm searchAddress={this.searchAddress} />
+                <MapComponent viewport={this.state.viewport} />
+            </div>
+        )
+    }
+}
+
+ReactDOM.render(<Mapable />, document.getElementById('app'));

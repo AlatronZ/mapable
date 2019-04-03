@@ -1,17 +1,40 @@
 import React from 'react';
 
-const SearchForm = (props) => (
-    <form>
-        <legend>Put Address Finder here</legend>
-        <input
-            autoFocus
-            type="text"
-            name="address"
-            //onChange={props.onChangeAddress}
-            placeholder="Enter an address"
-        />
-        <button>Submit</button>
-    </form>
-)
+export default class SearchForm extends React.Component {
+    state = {
+        error: undefined
+    }
 
-export default SearchForm
+    searchAddress = (e) => {
+        e.preventDefault();
+
+        const address = e.target.address.value.trim();
+        const error = this.props.searchAddress(address);
+
+        this.setState(() => ({ error }))
+
+        if(!error) {
+            e.target.elements.address.value = '';
+        }
+    }
+
+    render() {
+        return (
+            <div>
+                {this.state.error && <p>{this.state.error}</p>}
+                <form
+                    className="address-bar"
+                    onSubmit={this.searchAddress}
+                >
+                    <input
+                        autoFocus
+                        type="text"
+                        name="address"
+                        placeholder="Enter an address"
+                    />
+                    <button>Submit</button>
+                </form>
+            </div>
+        )
+    }
+}
