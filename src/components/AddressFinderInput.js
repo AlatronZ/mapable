@@ -16,10 +16,15 @@ export default class AddressFinderField extends React.Component {
         this.props.setMapData(fullAddress, metaData)
     }
 
+    //Can overlook clearing on focus as addressfinder is based on select
+    clearTextOnClick = (e) => {
+        e.target.value = ''
+    }
+
     componentDidMount() {
         scriptjs.get('https://api.addressfinder.io/assets/v3/widget.js', () => {
             let widget = new AddressFinder.Widget(
-                document.getElementById('address_line_1'),
+                document.getElementById('address_line'),
                 'ADDRESSFINDER_DEMO_KEY',
                 'NZ',
                 { show_locations: false }
@@ -40,10 +45,12 @@ export default class AddressFinderField extends React.Component {
     render() {
         return (
             <input
-                autoFocus
+                id="address_line"
                 className="address-bar__input"
+                autoFocus
+                onFocus={this.clearTextOnClick}
                 type="text"
-                id="address_line_1"
+
                 placeholder="Enter an address"
             />
         )

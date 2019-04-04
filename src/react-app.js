@@ -25,33 +25,38 @@ const zoomDefault = 18;
 
 class Mapable extends React.Component {
     state = {
-        address: '',
         viewport: {
             center: [latHome, longHome],
             zoom: zoomDefault
         }
     }
 
-    searchAddress = (address) => {
-        if (!address) { return 'Address was undefined' }
-        this.setState(() => ({ address }))
+    setMapData = (fullAddress, metaData) => {
+        this.setState(() => ({
+            viewport: {
+                center: [metaData.y, metaData.x]
+            }
+        }))
     }
 
-    setMapData = (fullAddress, metaData) => {
-        console.log(`New address at ${fullAddress}, Set viewport state to ${metaData.x}, ${metaData.y}`)
-        this.setState(() => {
-            viewport: {
-                center: [metaData.x, metaData.y]
-            }
-        })
+    onViewportChanged = (viewport) => {
+        this.setState(() => ({
+            viewport
+        }))
     }
 
     render() {
         return (
             <div>
                 <Header />
-                <AddressFinderForm searchAddress={this.searchAddress} setMapData={this.setMapData} />
-                <MapComponent viewport={this.state.viewport} />
+                <AddressFinderForm
+                    setMapData={this.setMapData}
+                />
+                <MapComponent
+                    viewport={this.state.viewport}
+                    animate={true}
+                    onViewportChanged={this.onViewportChanged}
+                />
             </div>
         )
     }
