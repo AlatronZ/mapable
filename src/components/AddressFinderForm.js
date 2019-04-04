@@ -1,19 +1,22 @@
 import React from 'react';
+import AddressFinderInput from './AddressFinderInput';
 
+/*
+ * The form component which connects to AddressFinder functionality
+ */
 export default class SearchForm extends React.Component {
     state = {
         error: undefined
     }
 
-    searchAddress = (e) => {
+    handleOnSubmit = (e) => {
         e.preventDefault();
 
-        const address = e.target.address.value.trim();
         const error = this.props.searchAddress(address);
 
         this.setState(() => ({ error }))
 
-        if(!error) {
+        if (!error) {
             e.target.elements.address.value = '';
         }
     }
@@ -23,16 +26,11 @@ export default class SearchForm extends React.Component {
             <div>
                 {this.state.error && <p>{this.state.error}</p>}
                 <form
-                    className="address-bar"
-                    onSubmit={this.searchAddress}
+                    className="address-form"
+                    onSubmit={this.handleOnSubmit}
                 >
-                    <input
-                        autoFocus
-                        type="text"
-                        name="address"
-                        placeholder="Enter an address"
-                    />
-                    <button>Submit</button>
+                    <AddressFinderInput setMapData={this.props.setMapData} />
+                    <button disabled={true}>Submit</button>
                 </form>
             </div>
         )

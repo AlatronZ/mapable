@@ -3,11 +3,13 @@ import ReactDOM from 'react-dom';
 import L from 'leaflet';
 import 'leaflet-draw';
 
-import 'normalize.css/normalize.css';
+import 'leaflet/dist/leaflet.css'
+import 'leaflet-draw/dist/leaflet.draw.css'
 import '../src/styles/styles.scss';
 
 /**
- * This version of mappable uses leaflet js instead of react leaflet 
+ * This basic version of mappable uses leaflet js instead of react leaflet
+ * A way to understand the APIs which will then be translated to react
  */
 const Mapable = () => {
     return (
@@ -36,7 +38,6 @@ const osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
     errorTileUrl: 'OpenStreetMaps unavailable'
 });
-const google = L.tileLayer('http://{s}mt1.google.com/mapstt?zoom={z}&x{x}&y{y}&client=google')
 const image = L.imageOverlay(
     '/images/colouredCheck.jpg',
     [[-43, 174], [-41, 176]],

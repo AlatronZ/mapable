@@ -19,7 +19,7 @@ const MapComponent = (props) => (
                 />
             </LayersControl.BaseLayer>
 
-            <LayersControl.BaseLayer name="LINZ" checked={false}>
+            <LayersControl.BaseLayer name="LINZ">
                 <TileLayer
                     url="http://tiles-{s}.data-cdn.linz.govt.nz/services;key=2661fdc42a6941e7aba3f8d9cb81eed1/tiles/v4/set=4702/EPSG:3857/{z}/{x}/{y}.png"
                     attribution="<a href=“http://data.linz.govt.nz”>Sourced from LINZ. CC BY 4.0</a>"

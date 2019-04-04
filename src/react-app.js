@@ -2,9 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Header from './components/Header';
-import SearchForm from './components/SearchForm';
+import AddressFinderForm from './components/AddressFinderForm';
 import MapComponent from './components/MapComponent';
-//import AddressFinder from './AddressFinder-React';
 
 //Leaflet node modules css
 import 'leaflet/dist/leaflet.css'
@@ -14,33 +13,44 @@ import 'leaflet-draw/dist/leaflet.draw.css'
 import '../src/styles/styles.scss';
 
 /*
-* This version implements react-leaflet instead of leaflet
-* Likewise react-leaflet-draw to leaflet-draw
-* Non react leaflets are used for their stylesheets, react versions look to be independent of react modules
-*/
+ * This version implements react-leaflet instead of leaflet
+ * Likewise react-leaflet-draw to leaflet-draw
+ * Leaflets (not react) accessed for their stylesheets
+ * React modules look to be independent of their inspired modules
+ */
 
-const latLanHome = [-41.294018, 174.777596];
+const latHome = -41.294018;
+const longHome = 174.777596;
 const zoomDefault = 18;
 
 class Mapable extends React.Component {
     state = {
         address: '',
         viewport: {
-            center: latLanHome,
+            center: [latHome, longHome],
             zoom: zoomDefault
         }
     }
 
     searchAddress = (address) => {
-        if(!address){ return 'Address was undefined' }
+        if (!address) { return 'Address was undefined' }
         this.setState(() => ({ address }))
+    }
+
+    setMapData = (fullAddress, metaData) => {
+        console.log(`New address at ${fullAddress}, Set viewport state to ${metaData.x}, ${metaData.y}`)
+        this.setState(() => {
+            viewport: {
+                center: [metaData.x, metaData.y]
+            }
+        })
     }
 
     render() {
         return (
             <div>
                 <Header />
-                <SearchForm searchAddress={this.searchAddress} />
+                <AddressFinderForm searchAddress={this.searchAddress} setMapData={this.setMapData} />
                 <MapComponent viewport={this.state.viewport} />
             </div>
         )
