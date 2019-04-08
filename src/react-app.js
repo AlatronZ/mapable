@@ -23,12 +23,43 @@ const latHome = -41.294018;
 const longHome = 174.777596;
 const zoomDefault = 18;
 
+const geoJSONDataDummy = {
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {},
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[
+                    [174.777051, -41.293789],
+                    [174.77866, -41.293881],
+                    [174.777804, -41.294464],
+                    [174.777051, -41.293789]]]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {},
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [[
+                    [174.778229, -41.293588],
+                    [174.778383, -41.294486],
+                    [174.77888, -41.293623],
+                    [174.778229, -41.293588]]]
+            }
+        }
+    ]
+}
+
 class Mapable extends React.Component {
     state = {
         viewport: {
             center: [latHome, longHome],
             zoom: zoomDefault
-        }
+        },
+        canvasLayer: {}
     }
 
     setMapData = (fullAddress, metaData) => {
@@ -45,6 +76,14 @@ class Mapable extends React.Component {
         }))
     }
 
+    onChange = (newCanvas) => {
+        // console.log(JSON.stringify(newCanvas))
+        this.setState(() => {
+            canvasLayer: JSON.stringify(newCanvas)
+        })
+        localStorage.setItem('canvasLayer', JSON.stringify(newCanvas))
+    }
+
     render() {
         return (
             <div>
@@ -53,9 +92,11 @@ class Mapable extends React.Component {
                     setMapData={this.setMapData}
                 />
                 <MapComponent
-                    viewport={this.state.viewport}
                     animate={true}
+                    viewport={this.state.viewport}
                     onViewportChanged={this.onViewportChanged}
+                    onChange={this.onChange}
+                    geoJSON={this.state.canvasLayer}
                 />
             </div>
         )
