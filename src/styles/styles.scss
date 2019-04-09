@@ -10,3 +10,15 @@
     padding: 10px;
     width: 480px;
 }
+
+.address-form {
+    background: blue;
+    display: flex;
+    flex-direction: row;
+    height: 120px;
+    width: 480px;
+}
+
+.address-form__input {
+    flex: 360px;
+}

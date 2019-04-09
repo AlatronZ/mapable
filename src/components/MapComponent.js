@@ -1,7 +1,7 @@
 import React from 'react';
 import { LayersControl, FeatureGroup, Map, TileLayer } from 'react-leaflet';
 import { EditControl } from 'react-leaflet-draw';
-import L from 'leaflet'
+import L from 'leaflet' //only used within onFeatureGroupReady (L.GeoJSON)
 
 /*
 * {s} subdomain, {z} zoom, {x}{y} coordinates, {r}(optional) load retina tiles
@@ -15,7 +15,9 @@ const attrOSM = "&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetM
 const attrLINZ = "<a href=“http://data.linz.govt.nz”>Sourced from LINZ. CC BY 4.0</a>"
 
 class MapComponent extends React.Component {
-    canvas = null //default
+    //defaults
+    canvas = null
+    boolLoad = true
 
     onCreated = (e) => {
         console.log(`Polygon ${e.layer._leaflet_id} created`)//: ${e.layer._latlngs[0]}`);
@@ -45,39 +47,63 @@ class MapComponent extends React.Component {
         this.onChange()
     }
 
-    /*load function
-     * ref is a reference to the feature group
-     * ref === this.map.layercontrol-overlay.featuregroup
+    /* FeatureGroup refresh (similar to componentOnMount)
+     * ref is a reference to this feature group
      */
     onFeatureGroupReady = (ref) => {
         if (ref == undefined) {
-            console.log('FeatureGroup-ref is undefined')
-            return
+            // console.log('FeatureGroup-ref is undefined')
+            return //catches error on first call
         }
 
-        let geoJSONData
-        try {
-            geoJSONData = JSON.parse(localStorage.getItem('canvasLayer'))
-        } catch (e) {
-            console.log('Load failed')
-            return
+        let geoJSONData = this.props.canvas //state canvas
+        if (this.boolLoad) {
+            //overwrite wth load data if it exists
+            try {
+                geoJSONData = JSON.parse(localStorage.getItem('canvas'))
+                if (geoJSONData == undefined) {
+                    throw 'load data not found'
+                } else if (JSON.stringify(geoJSONData) == '{}'){
+                    //TODO: tidy this case
+                    //default state canvas loaded
+                    console.log('Be default')
+                    geoJSONData = L.featureGroup()
+                    console.log(L.featureGroup())
+                }
+                console.log('Load file found')
+            } catch (e) {
+                console.log('Load failed:', e)
+                geoJSONData = this.props.canvas //set it to default
+            }
+
+            /**
+             * TODO: - clean up try/catch loop
+             *        - assign accurate default value at props.canvas state
+             *         - make case for loading an empty saved layer
+             * */
+
+            try {
+                const leafletGeoJSON = new L.GeoJSON(geoJSONData)
+                let featureGroup = ref.leafletElement
+
+                leafletGeoJSON.eachLayer((layer) => {
+                    featureGroup.addLayer(layer)
+                })
+            } catch (e) {
+                console.log('unable to read load file')
+                //add accountability here otherwise we load a default empty featuregroup
+            }
+
+            this.boolLoad = !this.boolLoad
         }
 
-        const leafletGeoJSON = new L.GeoJSON(geoJSONData)
-        let featureGroup = ref.leafletElement
-
-        leafletGeoJSON.eachLayer((layer) => {
-            featureGroup.addLayer(layer)
-        })
-
-        this.canvas = ref
-        console.log('Load successful')
+        this.canvas = ref //update canvas
     }
 
-    //called to save after any toolbar action is finished
+    //called to update prop state after any toolbar action is finished
     onChange = () => {
         if (!this.canvas) {
-            console.log('cannot save undefined canvas')
+            console.log('cannot update undefined canvas')
             return
         }
 
@@ -144,9 +170,7 @@ class MapComponent extends React.Component {
                                     polyline: false,
                                     rectangle: false
                                 }}
-                                // edit={{
-                                //     remove: true
-                                // }}
+
                                 onCreated={this.onCreated}
                                 onEdited={this.onEdited}
                                 onDeleted={this.onDeleted}

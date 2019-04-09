@@ -13,7 +13,7 @@ export default class AddressFinderField extends React.Component {
     }
 
     handleAddressSelect(fullAddress, metaData) {
-        this.props.setMapData(fullAddress, metaData)
+        this.props.handleMapData(fullAddress, metaData)
     }
 
     //Can overlook clearing on focus as addressfinder is based on select
